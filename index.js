@@ -1,123 +1,36 @@
-function addNewWeField(){
-    
-    // add new textarea
+function validation(){
+	var input_text = document.querySelector("#input_text");
+	var input_password = document.querySelector("#input_password");
+	var error_msg = document.querySelector(".error_msg");
 
-    let newNode=document.createElement('textarea');
-    newNode.classList.add('form-control');
-    newNode.classList.add('weField');
-    newNode.classList.add('mt-2');
-    newNode.setAttribute("row",3);
-    newNode.setAttribute("placeholder", "enter here")
-
-
-    let weOb=document.getElementById("we");
-    let weAddButtonOb=document.getElementById("weAddButton");
-
-    weOb.insertBefore(newNode, weAddButtonOb);
+	if(input_text.value.length <= 3 || input_password.value.length <= 3 ){
+		error_msg.style.display = "inline-block";
+		input_text.style.border = "1px solid #f74040";
+		input_password.style.border = "1px solid #f74040";
+		return false;
+	}
+	else{
+return true
+	}	
 }
 
-function addNewAQField(){
-
-    let newNode=document.createElement('textarea');
-    newNode.classList.add('form-control');
-    newNode.classList.add('aqField');
-    newNode.classList.add('mt-2');
-    newNode.setAttribute("row",3);
-    newNode.setAttribute("placeholder", "enter here")
-
-
-    let aqOb=document.getElementById("aq");
-    let aqAddButtonOb=document.getElementById("aqAddButton");
-
-    aqOb.insertBefore(newNode, aqAddButtonOb);
+function onBlurCall(){
+	input_text.style.border = "1px solid blue";
+	input_password.style.border = "1px solid blue";
 }
 
-// generating cv
-function generateCV(){
+var input_fields = document.querySelectorAll(".input");
+var login_btn = document.querySelector("#login_btn");
+
+input_fields.forEach(function(input_item){
+	input_item.addEventListener("input", function(){
+		if(input_item.value.length > 3){
+			login_btn.disabled = false;
+			login_btn.className = "btn enabled"
+		}
+	})
+})
+
+function reDirect(){
     
-
-    let nameField = document.getElementById("nameField").value;
-
-    let nameT1=document.getElementById('nameT1')
-
-    nameT1.innerHTML=nameField;
-
-    // direct
-
-    document.getElementById('nameT2').innerHTML=nameField;
-
-    // contacts
-
-    document.getElementById('contactT').innerHTML=document.getElementById("contactField").value;
-    
-    //address 
-
-    document.getElementById('addressT').innerHTML=document.getElementById("addressField").value;
-    
-    //links
-    
-    document.getElementById('fbT').innerHTML=document.getElementById("fbField").value;
-    
-    document.getElementById('instaT').innerHTML=document.getElementById("instaField").value;
-    
-    document.getElementById('linkedT').innerHTML=document.getElementById("linkedField").value;
-
-
-    // objective
-
-    document.getElementById('objectiveT').innerHTML=document.getElementById("objectiveField").value;
-
-
-    // work experiece
-
-    let wes=document.getElementsByClassName('weField');
-
-    let str=''
-
-    for(let e of wes)
-    {
-        str = str + `<li> ${e.value}</li>`;
-    }
-
-    document.getElementById("weT").innerHTML= str;
-
-
-    // academic qualification
-
-    let aqs=document.getElementsByClassName('aqField');
-
-    let str1=''
-
-    for(let e of aqs)
-    {
-        str1 = str1 + `<li> ${e.value}</li>`;
-    }
-
-    document.getElementById("aqT").innerHTML= str1;
-
-    // setting profile picture
-
-    let file=document.getElementById('imgField').files[0];
-    console.log(file);
-
-    let reader=new FileReader()
-    
-    reader.readAsDataURL(file);
-
-    console.log(reader.result);
-
-    // set image to template
-
-    reader.onloadend= function(){
-    document.getElementById('imgTemplate').src=reader.result;
-    
-    }
-
-    document.getElementById('cv-form').style.display='none';
-    document.getElementById('cv-template').style.display='block';
-
 }
-
-    function printCV(){
-        window.print();
-    }
